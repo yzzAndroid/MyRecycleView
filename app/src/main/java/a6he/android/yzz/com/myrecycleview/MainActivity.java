@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,9 +25,8 @@ public class MainActivity extends AppCompatActivity {
                     list.add("新增"+i);
                 }
             }
-            recyclerView.notifyData();
-            Log.e("======","==dd========"+list.size());
             recyclerView.complete();
+            Log.e("======","==dd========"+list.size());
             handler.removeMessages(1);
         }
     };
@@ -38,9 +38,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView = (YzzRecycleView) findViewById(R.id.recycle_view);
-
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(manager);
+        //RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager manager = new GridLayoutManager(this,3);
+        recyclerView.setLayoutManger(manager,3);
         adapter = new RecycleAdapter(this);
         list = new ArrayList<>();
         for (int i = 0; i <20 ; i++) {
@@ -50,25 +50,13 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setNeedFootFresh(true);
         recyclerView.setNeedHeadFresh(true);
         recyclerView.setMAdapter(adapter);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-            }
-        });
 
         recyclerView.setOnLoadMoreListener(new YzzRecycleView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
+                Log.e("======","==dd========"+list.size());
                 handler.sendEmptyMessageDelayed(1,3000);
             }
         });
-
-
     }
 }
