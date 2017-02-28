@@ -77,15 +77,15 @@ public class YzzRecycleView extends RecyclerView {
                 int visibleCount = getLayoutManager().getChildCount();
                 if (visibleCount > 0 && newState == RecyclerView.SCROLL_STATE_IDLE && isNeedFresh()) {
                     //判断是否到达顶部
-                        int first = ((LinearLayoutManager) getLayoutManager()).findFirstVisibleItemPosition();
-                        if (first == 0 && isNeedHeadFresh) {
-                            opPenHead = true;
-                        }
-                        int last = ((LinearLayoutManager) getLayoutManager()).findLastVisibleItemPosition();
+                    int first = ((LinearLayoutManager) getLayoutManager()).findFirstVisibleItemPosition();
+                    if (first == 0 && isNeedHeadFresh) {
+                        opPenHead = true;
+                    }
+                    int last = ((LinearLayoutManager) getLayoutManager()).findLastVisibleItemPosition();
 
-                        if (last == mAdapter.getItemCount() - 1) {
-                            opFoot = true;
-                        }
+                    if (last == mAdapter.getItemCount() - 1) {
+                        opFoot = true;
+                    }
                 }
             }
 
@@ -97,7 +97,6 @@ public class YzzRecycleView extends RecyclerView {
         });
 
     }
-
 
 
     public void setLayoutManger(final LayoutManager layout, final int spanCount) {
@@ -180,15 +179,15 @@ public class YzzRecycleView extends RecyclerView {
     }
 
     public int getHeadCount() {
-        return mRefreshPosition==HEAD ? 1 : 0;
+        return mRefreshPosition == HEAD ? 1 : 0;
     }
 
     public int getFootCount() {
-        return mRefreshPosition==BOTTOM ? 1 : 0;
+        return mRefreshPosition == BOTTOM ? 1 : 0;
     }
 
     public boolean isNeedFresh() {
-        return isNeedFootFresh || getFootCount() > 0 ? true : false;
+        return isNeedFootFresh || isNeedHeadFresh ? true : false;
     }
 
     //玩成的监听
@@ -228,10 +227,10 @@ public class YzzRecycleView extends RecyclerView {
             if (mState == STATE_NOMAL) {
                 return mAdapter.onCreateViewHolder(parent, viewType);
             }
-            if (viewType == INVALID_TYPE && isNeedHeadFresh && mRefreshPosition==HEAD) {
+            if (viewType == INVALID_TYPE && isNeedHeadFresh && mRefreshPosition == HEAD) {
 
                 return new ViewHolder(head);
-            } else if (viewType == INVALID_TYPE - 1 && isNeedFootFresh && mRefreshPosition==BOTTOM) {
+            } else if (viewType == INVALID_TYPE - 1 && isNeedFootFresh && mRefreshPosition == BOTTOM) {
                 return new ViewHolder(foot);
             }
             return mAdapter.onCreateViewHolder(parent, viewType);

@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setOnLoadMoreListener(new YzzRecycleView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                Log.e("======","==dd========"+list.size());
                 handler.sendEmptyMessageDelayed(1,3000);
             }
         });
